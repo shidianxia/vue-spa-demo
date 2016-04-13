@@ -1,39 +1,53 @@
 <template>
   <div id="app">
-    <hello></hello>
-    <p>
-      Welcome to everui.com!
-    </p>
+    <div class="container">
+        <div class="row center-xs">
+            <div class="logo"></div>
+        </div>
+        <div class="row center-xs">
+            <search></search>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
+import Search from './components/Search'
 
 export default {
-  components: {
-    Hello
-  }
+    data: function () {
+        return { isHome: 'home' }
+    },
+    components: {
+        Search
+    }
 }
 </script>
 
+<style src="assets/flexboxgrid.css"></style>
+
 <style>
 html {
-  height: 100%;
+    height: 100%;
 }
-
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
-
-#app {
-  color: #2c3e50;
-  margin-top: -100px;
-  max-width: 600px;
-  font-family: Source Sans Pro, Helvetica, sans-serif;
-  text-align: center;
+input:focus {
+    outline: none;
+}
+.container {
+    width: 1190px;
+    margin: 0 auto;
+}
+.logo {
+    width: 171px;
+    height: 46px;
+    margin-bottom: 40px;
+    background: url(assets/logo.svg) no-repeat;
+    background-size: contain;
 }
 </style>
