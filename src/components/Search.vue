@@ -17,7 +17,7 @@ export default {
   },
   methods: {
       submitSearch: function () {
-          this.$http.get('/api/test_suite_db').then(function (response) {
+          this.$http.get('/api/test_suite_db/_all_docs').then(function (response) {
               this.$set('msg',response.data)
           },
           function (response) {
