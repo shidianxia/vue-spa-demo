@@ -3,7 +3,7 @@
         <form @submit.prevent="submitSearch">
             <input v-model="searchText" class="home-search" type="text" placeholder="Search for vectors">
         </form>
-        {{ searchText }} {{ msg }}
+        {{ searchText }} {{ msg | json }}
     </div>
 </template>
 
