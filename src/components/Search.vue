@@ -3,7 +3,8 @@
         <form @submit.prevent="submitSearch">
             <input v-model="searchText" class="home-search" type="text" placeholder="Search for vectors">
         </form>
-        {{ searchText }} {{ msg | json }}
+        {{ searchText }}
+        <img :src="msg">
     </div>
 </template>
 
@@ -17,8 +18,8 @@ export default {
   },
   methods: {
       submitSearch: function () {
-          this.$http.get('/api/test_suite_db/_all_docs').then(function (response) {
-              this.$set('msg',response.data)
+          this.$http.get('https://gist.githubusercontent.com/anonymous/3c145d6419277b247e770fe3a24d0550/raw/5fc9c4d58663784698de45c0730dbfdea2b7d4de/logo.svg').then(function (response) {
+              this.$set('msg','data:image/svg+xml;base64,' + response.data)
           },
           function (response) {
               this.$set('msg',response.data)
