@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="container home">
         <div class="row center-xs">
             <div class="logo"></div>
         </div>
@@ -31,10 +31,7 @@ html {
     height: 100%;
 }
 .home {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+    padding-top: 200px;
 }
 input:focus {
     outline: none;

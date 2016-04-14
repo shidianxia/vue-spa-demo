@@ -1,6 +1,9 @@
 <template>
     <div class="col-xs-6">
-        <input class="home-search" tyoe="text" placeholder="Search for vectors">
+        <form @submit.prevent="submitSearch">
+            <input v-model="searchText" class="home-search" type="text" placeholder="Search for vectors">
+        </form>
+        {{ searchText }} {{ msg }}
     </div>
 </template>
 
@@ -8,8 +11,18 @@
 export default {
   data () {
     return {
-      msg: 'Hello World!'
+      msg: '',
+      searchText: ''
     }
+  },
+  methods: {
+      submitSearch: function () {
+          this.$http.get('https://everui.com/api').then(function (response) {
+              this.$set('msg',response)
+          })
+          
+          console.log(this.searchText)
+      }
   }
 }
 </script>
@@ -20,7 +33,6 @@ export default {
     padding: 0 10px;
     font-size: 16px;
     height: 44px;
-    line-height: 44px;
     border: 1px #e0e0e0 solid;
     border-radius: 2px;
 }
