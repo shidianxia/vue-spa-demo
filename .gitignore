@@ -1,6 +1,6 @@
 .DS_Store
 node_modules/
-src/config.js
+src/config.json
 dist/
 npm-debug.log
 selenium-debug.log

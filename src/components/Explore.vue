@@ -15,7 +15,7 @@ export default {
     },
     asyncData () {
         this.$progress.start()
-        var gists = this.$resource('gists?access_token=3369494de8b531a070abb3c227d16469f1fdfebe')
+        var gists = this.$resource('gists?access_token=' + this.$options.config.githubToken)
         return gists.get().then(function (response) {
             var io = []
             for (var i=0;i<response.data.length;i++){

@@ -14,6 +14,10 @@ Vue.use(Progress)
 
 Vue.http.options.root = 'https://api.github.com'
 
+Vue.mixin({
+    config: require('./config.json')
+})
+
 /* eslint-disable no-new */
 var App = Vue.extend({
     components: {
@@ -27,7 +31,7 @@ router.map({
     '/explore': {
         component: Explore
     },
-    
+
     '/contribute': {
         component: Contribute
     }
