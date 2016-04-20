@@ -15,7 +15,7 @@ export default {
     },
     asyncData () {
         this.$progress.start()
-        var gists = this.$resource('gists?access_token=58f3091138ecac414310a786412f182282a9b119')
+        var gists = this.$resource('gists?access_token=3369494de8b531a070abb3c227d16469f1fdfebe')
         return gists.get().then(function (response) {
             var io = []
             for (var i=0;i<response.data.length;i++){
