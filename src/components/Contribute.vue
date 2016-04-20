@@ -1,7 +1,7 @@
 <template>
     <div class="contribute row">
         <div class="upload-field col-xs">
-            <upload-image></upload-image>
+            <upload-image :file.sync="formData.file"></upload-image>
         </div>
         <div class="col-xs">
             <div class="box">
@@ -11,7 +11,7 @@
                     type="text"
                     label="Title"
                     error="false"
-                    value=""
+                    :value.sync="formData.title"
                     message=""
                     placeholder="Name of the Vector">
                     </form-input>
@@ -19,31 +19,35 @@
                     type="text"
                     label="Library"
                     error="false"
-                    value=""
+                    :value.sync="formData.library"
                     message=""
                     placeholder="Library of the Vector">
                     </form-input>
-                    <add-item></add-item>
+                    <add-item :items.sync="formData.tags"></add-item>
                     <div class="selector-group row">
                         <div class="col-xs">
                             <div class="box">
-                                <form-select label="Color" :options="colorFamily" :selected="colorFamily[0].name"></form-select>
+                                <form-select label="Color" :options="colorFamily" :selected.sync="formData.colorFamily"></form-select>
                             </div>
                         </div>
                         <div class="col-xs">
                             <div class="box">
-                                <form-select label="Style" :options="style" :selected="style[0].name"></form-select>
+                                <form-select label="Style" :options="style" :selected.sync="formData.style"></form-select>
                             </div>
                         </div>
                         <div class="col-xs">
                             <div class="box">
-                                <form-select label="Stroke" :options="Stroke" :selected="Stroke[0].name"></form-select>
+                                <form-select label="Stroke" :options="stroke" :selected.sync="formData.stroke"></form-select>
                             </div>
                         </div>
                     </div>
+                    <click type="general" @click="submitSVG">Done</click>
                 </div>
             </div>
         </div>
+        <modal-alert :show.sync="showModalAlert" title="Attention" button="OK">
+            <p slot="content">Make sure you have all blanks filled.</p>
+        </modal-alert>
     </div>
 </template>
 
@@ -52,10 +56,23 @@ import UploadImage from '../lib/UploadImage'
 import FormInput from '../lib/FormInput'
 import AddItem from '../lib/Additem'
 import FormSelect from '../lib/FormSelect'
+import Click from '../lib/Button'
+import ModalAlert from '../lib/ModalAlert'
 
 export default {
     data () {
         return {
+            showModalAlert: false,
+            formData: {
+                uuid: '',
+                title: '',
+                library: '',
+                tags: [],
+                colorFamily: 'B/W',
+                style: 'Mixed',
+                stroke: 'Mixed',
+                file: ''
+            },
             colorFamily: [
                 {name:'B/W',value:'B/W'},
                 {name:'Blue',value:'Blue'},
@@ -70,7 +87,7 @@ export default {
                 {name:'Flat',value:'Flat'},
                 {name:'Handmade',value:'Handmade'}
             ],
-            Stroke: [
+            stroke: [
                 {name:'Mixed',value:'Mixed'},
                 {name:'Filled',value:'Filled'},
                 {name:'Outline',value:'Outline'}
@@ -81,7 +98,53 @@ export default {
         UploadImage,
         FormInput,
         AddItem,
-        FormSelect
+        FormSelect,
+        Click,
+        ModalAlert
+    },
+    methods: {
+        submitSVG () {
+            if (this.formData.title && this.formData.library && this.formData.tags && this.formData.file) {
+                this.$progress.start()
+                //start to create gist file
+                var gistData = {
+                    description: this.formData.title,
+                    public: false,
+                    files: {
+                        file: {
+                            content: this.formData.file
+                        }
+                    }
+                }
+                this.$http.post('gists?assess_token=' + this.$options.config.githubToken, gistData).then(function (gistResponse) {
+                    this.$set('formData.file', gistResponse.data.id)
+                    //start to create database item locally
+                    this.$http.get(this.$options.config.databaseUrl + '/_uuids').then(function (response) {
+                        this.$http.put(this.$options.config.databaseUrl + '/' + this.$options.config.databaseName + '/' + response.data.uuids[0], this.formData).then(function () {
+                            this.$progress.finish()
+                            console.log('upload success')
+                        },
+                        function () {
+                            this.$progress.failed()
+                            console.log('database put item error')
+                        }
+                        )
+                    },
+                    function () {
+                        this.$progress.failed()
+                        console.log('couchdb state error')
+                    }
+                    )
+                },
+                function () {
+                    this.$progress.failed()
+                    console.log('gist state error')
+                }
+                )
+            }else {
+                this.$set('showModalAlert', true)
+            }
+        }
     }
 }
 </script>

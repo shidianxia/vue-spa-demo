@@ -20,13 +20,19 @@
 <script>
     export default {
 
-        props: ['info'],
+        props: ['info','file'],
 
         data() {
             return {
                 image: '',
                 hovering: false
             }
+        },
+        
+        computed: {
+            file() {
+                return this.image
+            }    
         },
 
         methods: {

@@ -2,7 +2,7 @@
     <div class="form-item" :class="{'form-error' : formError}">
         <label class="form-label" v-if="!formError">{{ label }}</label>
         <label class="form-label" v-if="formError">{{ message }}</label>
-        <input class="form-input" type="{{ type }}" placeholder="{{ placeholder }}" value="{{ value }}">
+        <input class="form-input" type="{{ type }}" placeholder="{{ placeholder }}" v-model="value">
     </div>
 </template>
 

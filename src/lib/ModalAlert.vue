@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="modal-footer cf">
-                    <button class="button button-action" @click="show = false">Confirm action</button>
+                    <button class="button button-action" @click="show = false">{{ button }}</button>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
 <script>
     export default {
 
-        props: ['show', 'title']
+        props: ['show', 'title', 'button']
 
     };
 </script>
