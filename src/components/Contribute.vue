@@ -50,7 +50,7 @@
 <script>
 import UploadImage from '../lib/UploadImage'
 import FormInput from '../lib/FormInput'
-import AddItem from '../lib/AddItem'
+import AddItem from '../lib/Additem'
 import FormSelect from '../lib/FormSelect'
 
 export default {
