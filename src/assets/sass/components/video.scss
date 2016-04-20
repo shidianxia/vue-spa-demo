@@ -1,0 +1,45 @@
+.video {
+    margin-bottom: 1.5rem;
+}
+
+.video-cover {
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.video-play {
+    @include center-middle();
+    width: 80px;
+    height: 50px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    @include transition (all 0.12s linear);
+    &:hover {
+        cursor: pointer;
+        background: $color-ok-solid;
+    }
+    i {
+        font-size: 38px;
+        color: #fff;
+        @include center-middle();
+        left: 54%;
+    }
+}
+
+.video-player {
+    background: #000;
+    &:hover .video-close.close {
+        visibility: visible;
+    }
+}
+
+.video-close.close {
+    top: 22px;
+    left: 10px;
+    visibility: hidden;
+    &:hover span {
+        background: $color-ok-solid;
+    }
+}
