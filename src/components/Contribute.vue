@@ -111,12 +111,12 @@ export default {
                     description: this.formData.title,
                     public: false,
                     files: {
-                        file: {
+                        svg: {
                             content: this.formData.file
                         }
                     }
                 }
-                this.$http.post('gists?assess_token=' + this.$options.config.githubToken, gistData).then(function (gistResponse) {
+                this.$http.post('gists', gistData, { headers: { Authorization: 'token ' + this.$options.config.githubToken } }).then(function (gistResponse) {
                     this.$set('formData.file', gistResponse.data.id)
                     //start to create database item locally
                     this.$http.get(this.$options.config.databaseUrl + '/_uuids').then(function (response) {

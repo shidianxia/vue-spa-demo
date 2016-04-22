@@ -1,7 +1,7 @@
 <template>
     <div class="vector-list">
         <div v-for="item in gistList" class="vector-item">
-            <img :src="item.raw">
+            <img v-lazy="item.doc.file">
         </div>
     </div>
 </template>
@@ -15,26 +15,16 @@ export default {
     },
     asyncData () {
         this.$progress.start()
-        var gists = this.$resource('gists?access_token=' + this.$options.config.githubToken)
-        return gists.get().then(function (response) {
-            var io = []
-            for (var i=0;i<response.data.length;i++){
-                this.$http.get(response.data[i].files.test_svg.raw_url).then(function (response) {
-                    io.push({raw: 'data:image/svg+xml;base64,' + btoa(response.data)})
-                    this.$progress.increase(1)
-                })
-            }
+        return this.$http.get(this.$options.config.databaseUrl + '/' + this.$options.config.databaseName + '/_all_docs?include_docs=true').then(function (response) {
             return {
-                gistList: io
+                gistList: response.data.rows
             }
-        },function () {
-            this.$progress.failed()
-        })
-    },
-    watch: {
-        'gistList': function () {
             this.$progress.finish()
+        },
+        function () {
+            this.$progress.failed()
         }
+        )
     },
     ready () {
         
