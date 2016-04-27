@@ -106,39 +106,20 @@ export default {
         submitSVG () {
             if (this.formData.title && this.formData.library && this.formData.tags && this.formData.file) {
                 this.$progress.start()
-                //start to create gist file
-                var gistData = {
-                    description: this.formData.title,
-                    public: false,
-                    files: {
-                        svg: {
-                            content: this.formData.file
-                        }
-                    }
-                }
-                this.$http.post('gists', gistData, { headers: { Authorization: 'token ' + this.$options.config.githubToken } }).then(function (gistResponse) {
-                    this.$set('formData.file', gistResponse.data.id)
-                    //start to create database item locally
-                    this.$http.get(this.$options.config.databaseUrl + '/_uuids').then(function (response) {
-                        this.$http.put(this.$options.config.databaseUrl + '/' + this.$options.config.databaseName + '/' + response.data.uuids[0], this.formData).then(function () {
-                            this.$progress.finish()
-                            console.log('upload success')
-                        },
-                        function () {
-                            this.$progress.failed()
-                            console.log('database put item error')
-                        }
-                        )
+                this.$http.get(this.$options.config.databaseUrl + '/_uuids').then(function (response) {
+                    this.$http.put(this.$options.config.databaseUrl + '/' + this.$options.config.databaseName + '/' + response.data.uuids[0], this.formData).then(function () {
+                        this.$progress.finish()
+                        console.log('upload success')
                     },
                     function () {
                         this.$progress.failed()
-                        console.log('couchdb state error')
+                        console.log('database put item error')
                     }
                     )
                 },
                 function () {
                     this.$progress.failed()
-                    console.log('gist state error')
+                    console.log('couchdb state error')
                 }
                 )
             }else {

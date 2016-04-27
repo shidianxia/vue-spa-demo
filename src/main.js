@@ -46,4 +46,4 @@ router.map({
 //开始路由
 router.start(App, 'body')
 
-router.go('/explore')
+router.go('/contribute')
