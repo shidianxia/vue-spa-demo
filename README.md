@@ -1,6 +1,6 @@
-# everui
+# vue-spa-demo
 
-> An everui.com project
+> A simple vue.js spa demo.
 
 ## Build Setup
 
