@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+//import VueLocalforage from 'vue-localforage'
 import VueAsyncData from 'vue-async-data'
 import VueRouter from 'vue-router'
 import Progress from 'vue-progressbar'
@@ -9,6 +10,7 @@ import Explore from './components/Explore'
 import Contribute from './components/Contribute'
 
 Vue.use(VueResource)
+//Vue.use(VueLocalforage)
 Vue.use(VueAsyncData)
 Vue.use(VueRouter)
 Vue.use(Progress)

@@ -46,18 +46,22 @@
             </div>
         </div>
         <modal-alert :show.sync="showModalAlert" title="Attention" button="OK">
-            <p slot="content">Make sure you have all blanks filled.</p>
+            <p slot="content">
+                <form-input
+                    type="text"
+                    label="Title"
+                    error="false"
+                    :value.sync="formData.title"
+                    message=""
+                    placeholder="Name of the Vector">
+                    </form-input>
+            </p>
         </modal-alert>
     </div>
 </template>
 
 <script>
-import UploadImage from '../lib/UploadImage'
-import FormInput from '../lib/FormInput'
-import AddItem from '../lib/Additem'
-import FormSelect from '../lib/FormSelect'
-import Click from '../lib/Button'
-import ModalAlert from '../lib/ModalAlert'
+import { UploadImage, FormInput, AddItem, FormSelect, Click, ModalAlert } from '../lib/index'
 
 export default {
     data () {
@@ -65,7 +69,7 @@ export default {
             showModalAlert: false,
             formData: {
                 uuid: '',
-                title: '',
+                title: 'xxxxx',
                 library: '',
                 tags: [],
                 colorFamily: 'B/W',
